@@ -6,6 +6,9 @@ head_env = '<?xml version="1.0" encoding="UTF-8"?>\n<launch>\n	<arg name="enviro
 head1_env = '\t<group ns="/uwv/sauvc_pool" if="$(eval arg(\'environment\')==\'sauvc_pool\')">'
 tail_env = '\t</group>\n</launch>'
 
+head_control = '<?xml version="1.0" encoding="UTF-8"?>\n<launch>\n\t<arg name="vehicle" default="vec6"/>\n\t<arg name="round" default="2"/>\n\t<include file="$(find uwv_env)/launch/sauvc-pool-autogen.launch">\n\t\t<arg name="environment" value="sauvc_pool"/>\n\t\t<arg name="debug" value="false"/>\n\t\t<arg name="gui" value="true"/>\n\t\t<arg name="paused" value="true"/>\n\t\t<arg name="use_sim_time" value="true"/>\n\t\t<arg name="verbose" value="true"/>\n\t</include>\n\t<group ns="/vec6" if="$(eval arg(\'vehicle\')==\'vec6\')">\n\t\t<rosparam file="$(find uwv_control)/config/pid_gains.yaml"/>'
+tail_control = '\t</group>\n</launch>'
+
 def q_gate(pos):
 	return f'\t\t<param name="q_gate_description" \n\t\t \tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/q_gate.xacro" />\n\t\t<node name="spawn_q_gate" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model q_gate -param q_gate_description -x {pos[0]} -y {pos[1]} -Y {pos[2]}"/>'
 
@@ -23,6 +26,9 @@ def task4_pinger(pos):
 
 def task4_no_pinger(pos):
 	return f'\t\t<param name="task4_no_pinger_desc" \n\t\t\tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/task4_no_pinger.xacro" />\n\t\t<node name="spawn_task4_no_pinger" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model task4_no_pinger -param task4_no_pinger_desc -x {pos[0]} -y {pos[1]} -z -2 -Y {pos[2]}"/>'
+
+def start(pos):
+	return f'<rosparam file="$(find uwv_control)/config/pid_gains.yaml"/>\n\t\n\t\t<param name="robot_description" \n\t\t\t   command="$(find xacro)/xacro $(find uwv_description)/urdf/vec6.xacro" />\n\t\t<node name="vec6_spawner" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model vec6 -param robot_description -x {pos[0]} -y {pos[1]} -Y {pos[2]}"/>'
 
 if __name__ == "__main__":
 

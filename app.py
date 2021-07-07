@@ -117,6 +117,11 @@ class Ui_MainWindow(object):
 					print(gen.task4_no_pinger(pos), end="\n\n", file=f)
 				elif objType == "Pinger-Flare":
 					print(gen.task4_pinger(pos), end="\n\n", file=f)
+				elif objType == "Start-Point":
+					with open(os.path.join(self.folderpath, "uwv_control/launch/sauvc-pool-autogen.launch"), "w") as fs:
+						print(gen.head_control, end="\n\n", file=fs)
+						print(gen.start(pos) , end="\n\n", file=fs)
+						print(gen.tail_control, end="\n\n", file=fs)
 
 			print(gen.tail_env, end="\n\n", file=f)
 
