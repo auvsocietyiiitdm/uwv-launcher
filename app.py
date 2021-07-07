@@ -10,14 +10,21 @@ import os
 
 class Ui_MainWindow(object):
 	def setupUi(self, MainWindow):
-		MainWindow.setObjectName("MainWindow")
-		MainWindow.resize(1737, 760)
+		MainWindow.setObjectName("uwv-launcher")
+		MainWindow.resize(1800, 1080)
+
 		self.centralwidget = QtWidgets.QWidget(MainWindow)
 		self.centralwidget.setObjectName("centralwidget")
 		self.mapUiWidget = QtWidgets.QWidget(self.centralwidget)
-		self.mapUiWidget.setGeometry(QtCore.QRect(19, 19, 1319, 659))
+		self.mapUiWidget.setGeometry(QtCore.QRect(20, 150, 1319, 659))
 		self.mapUiWidget.setObjectName("map_ui")
 		self.mapUiWidget.raise_()
+
+		self.heading = QtWidgets.QLabel(self.centralwidget)
+		self.heading.setText("<h1>SAUVC Pool</h1>")
+		self.heading.move(1400, 50)
+		self.heading.setGeometry(20, 70, 1319, 100)
+		self.heading.setAlignment(QtCore.Qt.AlignCenter)
 
 		self.mapUI = map_ui.Label()
 		self.lay = QtWidgets.QHBoxLayout(self.mapUiWidget)
@@ -31,30 +38,35 @@ class Ui_MainWindow(object):
 		self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self.mapUI, 'Select location of uwv-simulator package', '/home')
 		assert os.path.isdir(os.path.join(self.folderpath, "uwv_control")), "Wrong path to uwv-simulator"
 
+		self.text1 = QtWidgets.QLabel(self.centralwidget)
+		self.text1.setText("<h3>Select an object to place</h3>\n<h5>Left Click to place, Right click to remove</h5>")
+		self.text1.move(1400, 200)
+
 		for i, name in enumerate(self.mapUI.names):
 			option = QtWidgets.QRadioButton(self.centralwidget)
-			option.setGeometry(QtCore.QRect(1550, 110+(i*30), 112, 23))
+			option.setGeometry(QtCore.QRect(1400, 300+(i*30), 200, 23))
 			option.setObjectName(self.mapUI.names[i])
 			option.raise_()
 			self.options.append(option)
 
 		self.options[0].setChecked(True)
 
-		saveButton = QtWidgets.QPushButton("Confirm Object", self.centralwidget)
-		saveButton.move(1550, 330)
-		saveButton.clicked.connect(self.saveObject)
-
-		saveButton = QtWidgets.QPushButton("Generate!", self.centralwidget)
-		saveButton.move(1550, 500)
-		saveButton.clicked.connect(self.generate)
-
 		self.angleText = QtWidgets.QLabel(self.centralwidget)
 		self.angleText.setText("Angle : 0 degrees")
-		self.angleText.move(1550, 400)
+		self.angleText.move(1400, 540)
 
 		angleButton = QtWidgets.QPushButton("Change Angle", self.centralwidget)
-		angleButton.move(1550, 430)
+		angleButton.move(1400, 570)
 		angleButton.clicked.connect(self.changeAngle)
+
+		saveButton = QtWidgets.QPushButton("Confirm Object", self.centralwidget)
+		saveButton.move(1400, 620)
+		saveButton.clicked.connect(self.saveObject)
+
+		saveButton = QtWidgets.QPushButton("Generate Launch Files!", self.centralwidget)
+		saveButton.move(1400, 800)
+		saveButton.setGeometry(1400, 700, 300, 50)
+		saveButton.clicked.connect(self.generate)
 
 		MainWindow.setCentralWidget(self.centralwidget)
 		self.mapUI.currentObject = self.mapUI.options["Start-Point"]
@@ -143,4 +155,5 @@ if __name__ == "__main__":
 	ui = Ui_MainWindow()
 	ui.setupUi(MainWindow)
 	MainWindow.show()
+	MainWindow.setWindowTitle("uwv-launcher")
 	sys.exit(app.exec_())
