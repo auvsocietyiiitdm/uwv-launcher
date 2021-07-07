@@ -2,10 +2,9 @@
 This file contains the different lines used in the launch file.
 '''
 
-head = '<?xml version="1.0" encoding="UTF-8"?>\n<launch>\n	<arg name="environment" default="sauvc_pool"/>\n	<arg name="show_task4_balls" default="false" if="$(eval arg(\'environment\')==\'sauvc_pool\')"/>\n	<arg name="debug" default="false"/>\n	<arg name="gui" default="true"/>\n	<arg name="paused" default="true"/>\n	<arg name="use_sim_time" default="true"/>\n	<arg name="verbose" default="true"/>\n	<arg name="world_name" value="$(find uwv_env)/worlds/sauvc_pool.world" if="$(eval arg(\'environment\')==\'sauvc_pool\')"/>\n	<!-- Launching the world -->\n	<include file="$(find gazebo_ros)/launch/empty_world.launch">\n		<arg name="world_name" value="$(arg world_name)"/>\n		<arg name="debug" value="$(arg debug)"/>\n		<arg name="gui" value="$(arg gui)"/>\n		<arg name="paused" value="$(arg paused)"/>\n		<arg name="use_sim_time" value="$(arg use_sim_time)"/>\n		<arg name="verbose" value="$(arg verbose)"/>\n	</include>'
-head1 = '\t<group ns="/uwv/sauvc_pool" if="$(eval arg(\'environment\')==\'sauvc_pool\')">'
-
-tail = '\t</group>\n</launch>'
+head_env = '<?xml version="1.0" encoding="UTF-8"?>\n<launch>\n	<arg name="environment" default="sauvc_pool"/>\n	<arg name="show_task4_balls" default="false" if="$(eval arg(\'environment\')==\'sauvc_pool\')"/>\n	<arg name="debug" default="false"/>\n	<arg name="gui" default="true"/>\n	<arg name="paused" default="true"/>\n	<arg name="use_sim_time" default="true"/>\n	<arg name="verbose" default="true"/>\n	<arg name="world_name" value="$(find uwv_env)/worlds/sauvc_pool.world" if="$(eval arg(\'environment\')==\'sauvc_pool\')"/>\n	<!-- Launching the world -->\n	<include file="$(find gazebo_ros)/launch/empty_world.launch">\n		<arg name="world_name" value="$(arg world_name)"/>\n		<arg name="debug" value="$(arg debug)"/>\n		<arg name="gui" value="$(arg gui)"/>\n		<arg name="paused" value="$(arg paused)"/>\n		<arg name="use_sim_time" value="$(arg use_sim_time)"/>\n		<arg name="verbose" value="$(arg verbose)"/>\n	</include>'
+head1_env = '\t<group ns="/uwv/sauvc_pool" if="$(eval arg(\'environment\')==\'sauvc_pool\')">'
+tail_env = '\t</group>\n</launch>'
 
 def q_gate(pos):
 	return f'\t\t<param name="q_gate_description" \n\t\t \tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/q_gate.xacro" />\n\t\t<node name="spawn_q_gate" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model q_gate -param q_gate_description -x {pos[0]} -y {pos[1]} -Y {pos[2]}"/>'
@@ -28,8 +27,8 @@ def task4_no_pinger(pos):
 if __name__ == "__main__":
 
 	with open("/home/subzer0/uwv-ws/src/uwv-simulator/uwv_env/launch/launch-file.launch", "w") as f:
-		print(head, end="\n\n", file=f)
-		print(head1, end="\n\n", file=f)
+		print(head_env, end="\n\n", file=f)
+		print(head1_env, end="\n\n", file=f)
 		
 		print(q_gate((0.1, 0, 0)), end="\n\n", file=f)
 		print(task1_gate((0.2, 0, 0)), end="\n\n", file=f)
@@ -38,5 +37,5 @@ if __name__ == "__main__":
 		print(task4_pinger((0.4, 0, 0)), end="\n\n", file=f)
 		print(task4_no_pinger((0.5, 0, 0)), end="\n\n", file=f)
 		
-		print(tail, end="\n\n", file=f)
+		print(tail_env, end="\n\n", file=f)
 

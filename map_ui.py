@@ -40,11 +40,9 @@ class Label(QtWidgets.QWidget):
 
 	def mousePressEvent(self, event):
 		if event.button() == QtCore.Qt.LeftButton:
-			print("left press")
 			self.drawing = True
 			self.draw(event.pos())
 		if event.button() == QtCore.Qt.RightButton:
-			print("right press")
 			self.draw()
 
 	def mouseMoveEvent(self, event):
@@ -55,10 +53,8 @@ class Label(QtWidgets.QWidget):
 
 	def mouseReleaseEvent(self, event):
 		if event.button() == QtCore.Qt.LeftButton:
-			print("left release")
 			self.drawing = False
 		if event.button() == QtCore.Qt.RightButton:
-			print("right release")
 			self.lastPoint = None
 			self.draw()
 
@@ -75,7 +71,6 @@ class Label(QtWidgets.QWidget):
 			painter.drawPixmap(self.objects[i][1][0], self.objects[i][1][1], self.options[self.objects[i][0]].transformed(transform))
 				
 		if pos != None:
-			print(f'pos={pos}')
 			if self.currentOption in ["Gate", "Qual-Gate"]:
 				self.lastPoint = QtCore.QPoint(pos.x(), pos.y())	
 			else:
@@ -87,7 +82,6 @@ class Label(QtWidgets.QWidget):
 	def saveObject(self, objName):
 		self.objects[self.objectsCount] = [objName, (self.lastPoint.x(), self.lastPoint.y()), self.angle]
 		self.objectsCount += 1
-		print(self.objects)
 
 	def changeAngle(self):
 		transform = QtGui.QTransform().rotate(self.angle)

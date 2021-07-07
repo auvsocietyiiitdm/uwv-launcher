@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import map_ui
 import gen
 import math
+import os
 
 class Ui_MainWindow(object):
 	def setupUi(self, MainWindow):
@@ -27,12 +28,14 @@ class Ui_MainWindow(object):
 		self.variables = ["startPoint", "gate", "qualGate", "mat", "redBucket", "blueBucket", "redFlare", "yellowFlare"]
 		self.options = []
 		
+		self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self.mapUI, 'Select location of uwv-simulator package', '/home')
+		assert os.path.isdir(os.path.join(self.folderpath, "uwv_control")), "Wrong path to uwv-simulator"
+
 		for i, name in enumerate(self.mapUI.names):
 			option = QtWidgets.QRadioButton(self.centralwidget)
 			option.setGeometry(QtCore.QRect(1550, 110+(i*30), 112, 23))
 			option.setObjectName(self.mapUI.names[i])
 			option.raise_()
-			print(name)
 			self.options.append(option)
 
 		self.options[0].setChecked(True)
@@ -93,9 +96,9 @@ class Ui_MainWindow(object):
 
 	def generate(self):
 		
-		with open("/home/subzer0/uwv-ws/src/uwv-simulator/uwv_env/launch/launch-file.launch", "w") as f:
-			print(gen.head, end="\n\n", file=f)
-			print(gen.head1, end="\n\n", file=f)
+		with open(os.path.join(self.folderpath, "uwv_env/launch/sauvc-pool-autogen.launch"), "w") as f:
+			print(gen.head_env, end="\n\n", file=f)
+			print(gen.head1_env, end="\n\n", file=f)
 
 			for i in self.mapUI.objects.keys():
 				objType = self.mapUI.objects[i][0]
@@ -115,8 +118,8 @@ class Ui_MainWindow(object):
 				elif objType == "Pinger-Flare":
 					print(gen.task4_pinger(pos), end="\n\n", file=f)
 
-			print(gen.tail, end="\n\n", file=f)
-	
+			print(gen.tail_env, end="\n\n", file=f)
+
 		print("Launch file generated!")
 
 	def changeAngle(self):
