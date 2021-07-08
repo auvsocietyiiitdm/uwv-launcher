@@ -68,6 +68,21 @@ class Ui_MainWindow(object):
 		saveButton.setGeometry(1400, 700, 300, 50)
 		saveButton.clicked.connect(self.generate)
 
+		self.genText = QtWidgets.QLabel(self.centralwidget)
+		self.genText.setText("")
+		self.genText.setStyleSheet("color: green")
+		self.genText.setGeometry(1400, 750, 300, 50)
+
+		launchButton = QtWidgets.QPushButton("Launch", self.centralwidget)
+		launchButton.move(1400, 800)
+		launchButton.setGeometry(1400, 800, 300, 50)
+		launchButton.clicked.connect(self.launch)
+
+		self.launchText = QtWidgets.QLabel(self.centralwidget)
+		self.launchText.setText("")
+		self.launchText.setStyleSheet("color: red")
+		self.launchText.setGeometry(1400, 850, 300, 50)
+
 		MainWindow.setCentralWidget(self.centralwidget)
 		self.mapUI.currentObject = self.mapUI.options["Start-Point"]
 		self.retranslateUi(MainWindow)
@@ -138,6 +153,7 @@ class Ui_MainWindow(object):
 			print(gen.tail_env, end="\n\n", file=f)
 
 		print("Launch file generated!")
+		self.genText.setText("Launch file generated!")
 
 	def changeAngle(self):
 		self.angleIdx += 1
@@ -147,6 +163,14 @@ class Ui_MainWindow(object):
 		self.mapUI.angle = self.angles[self.angleIdx]
 		self.mapUI.currentObject = self.mapUI.options[self.mapUI.currentOption]
 		self.mapUI.currentObject = self.mapUI.currentObject.transformed(transform)
+
+	def launch(self):
+		if not os.path.isfile(os.path.join(self.folderpath, "uwv_control/launch/sauvc-pool-autogen.launch")):
+			self.launchText.setText("Launch files do not exist! Please generate them")
+			print("Launch files do not exist! Please generate them")
+			return
+		os.system("gnome-terminal -e 'bash -c \"roslaunch uwv_control sauvc-pool-autogen.launch; exec bash\"'")
+		exit(0)
 
 if __name__ == "__main__":
 	import sys
