@@ -19,7 +19,7 @@ def task1_flare(pos):
 	return f'\t\t<param name="task1_flare_desc" \n\t\t\tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/task1_flare.xacro" />\n\t\t<node name="$(anon spawn_task1_flare)" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model task1_flare -param task1_flare_desc -x {pos[0]} -y {pos[1]} -z -2 -Y {pos[2]}"/>'
 
 def task2_mat(pos):
-	return f'\t\t<param name="task2_mat_desc" \n\t\t\tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/task2_mat.xacro" />\n\t\t<node name="$(anon spawn_task2_mat)" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model task2_mat -param task2_mat_desc -x {pos[0]} -y {pos[1]} -z -2 -Y {pos[2]} -Y {pos[2]}"/>'
+	return f'\t\t<param name="task2_mat_desc" \n\t\t\tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/task2_mat.xacro" />\n\t\t<node name="$(anon spawn_task2_mat)" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model task2_mat -param task2_mat_desc -x {-pos[0]} -y {-pos[1]} -z -2 -Y {pos[2]} -Y {pos[2]}"/>'
 
 def task4_pinger(pos):
 	return f'\t\t<param name="task4_pinger_desc" \n\t\t\tcommand="$(find xacro)/xacro $(find uwv_env)/urdf/sauvc_pool/task4_pinger.xacro" />\n\t\t<node name="$(anon spawn_task4_pinger)" \n\t\t\tpkg="gazebo_ros"\n\t\t\ttype="spawn_model" \n\t\t\trespawn="false"\n\t\t\toutput="screen"\n\t\t\targs="-urdf -model task4_pinger -param task4_pinger_desc -x {pos[0]} -y {pos[1]} -z -2 -Y {pos[2]}"/>'
