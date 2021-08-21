@@ -2,6 +2,7 @@
 This file contains the main widget where placing different objects is possible.
 This can be combined with main.py if needed.
 '''
+from rospkg import RosPack
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -12,17 +13,18 @@ class Label(QtWidgets.QWidget):
 		self.names = ["Start-Point", "Gate", "Qual-Gate", "Mat", "No-Pinger-Flare", "Red-Flare", "Pinger-Flare"]
 
 		self.options = {}
-		self.options["Start-Point"] = QtGui.QPixmap("assets/start-point.png")
-		self.options["Gate"] = QtGui.QPixmap("assets/gate.png")
-		self.options["Qual-Gate"] = QtGui.QPixmap("assets/qual-gate.png")
-		self.options["Mat"] = QtGui.QPixmap("assets/mat.png")
-		self.options["Red-Bucket"] = QtGui.QPixmap("assets/red-bucket.png")
-		self.options["No-Pinger-Flare"] = QtGui.QPixmap("assets/no-pinger-flare.png")
-		self.options["Red-Flare"] = QtGui.QPixmap("assets/red-flare.png")
-		self.options["Pinger-Flare"] = QtGui.QPixmap("assets/pinger-flare.png")
+		dir_path = RosPack().get_path('uwv_launcher')
+		self.options["Start-Point"] = QtGui.QPixmap(dir_path+"/assets/start-point.png")
+		self.options["Gate"] = QtGui.QPixmap(dir_path+"/assets/gate.png")
+		self.options["Qual-Gate"] = QtGui.QPixmap(dir_path+"/assets/qual-gate.png")
+		self.options["Mat"] = QtGui.QPixmap(dir_path+"/assets/mat.png")
+		self.options["Red-Bucket"] = QtGui.QPixmap(dir_path+"/assets/red-bucket.png")
+		self.options["No-Pinger-Flare"] = QtGui.QPixmap(dir_path+"/assets/no-pinger-flare.png")
+		self.options["Red-Flare"] = QtGui.QPixmap(dir_path+"/assets/red-flare.png")
+		self.options["Pinger-Flare"] = QtGui.QPixmap(dir_path+"/assets/pinger-flare.png")
 
-		self.image = QtGui.QPixmap("assets/pool.png")
-		self.image1 = QtGui.QPixmap("assets/pool.png")
+		self.image = QtGui.QPixmap(dir_path+"/assets/pool.png")
+		self.image1 = QtGui.QPixmap(dir_path+"/assets/pool.png")
 		
 		self.objects = {}
 		self.objectsCount = 0
