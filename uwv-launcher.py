@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 '''
 This is the main application that needs to be run for a GUI based launch file generator.
 '''

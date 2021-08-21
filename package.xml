@@ -1,0 +1,16 @@
+<package format="2">
+  <name>uwv_launcher</name>
+  <version>1.0.0</version>
+
+  <description>A utility package to build SAUVC pool</description>
+
+  <author email="auv.society@iiitdm.ac.in">Subash Mylraj</author>
+
+  <maintainer email="auv.society@iiitdm.ac.in">Subash Mylraj</maintainer>
+
+  <license>BSD</license>
+
+  <exec_depend>uwv_control</exec_depend>
+  <exec_depend>uwv_env</exec_depend>
+
+</package>
